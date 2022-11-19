@@ -4,15 +4,23 @@ import CompanyLayout from '../../../components/CompanyLayout/Layout'
 import DropdownIcon from '../../../components/Icons/DropdownIcon'
 import {useQuery} from 'react-query'
 import axios from 'axios'
+import LoadingState from '../../../components/LoadingState'
 
 const Offers = () => {
+
+
+    const [page, setPage] = useState(1);
+    const [selectedRequest, setSelectedRequest] = useState("");
+    const [selectedRequestLoader, setSelectedRequestLoader] = useState(false)
 
     // const [requests, setRequests] = useState()
     const id = '63668c437e1caa4f18ae319f'
 
-    const fetchRequests = async ()=>{
+    const fetchRequests = async (page)=>{
+        // return console.log(page)
         try{
-            const res = await axios.get( `http://127.0.0.1:8080/api/companies/${id}/requests` );
+            // return console.log(page);
+            const res = await fetch( `http://127.0.0.1:8080/api/deliveries?page=${page}&size=10` );
             return res.json()
             // setRequests(res.data.data)
             // console.log(res)
@@ -21,16 +29,29 @@ const Offers = () => {
         }
     };
 
-    const {data, status} = useQuery("requests", fetchRequests)
+    const {data, status, isLoading,
+        isError,
+        error,
+        isFetching,
+        isPreviousData} =  useQuery(['requests', page], () => fetchRequests(page), { keepPreviousData: true });
 
 
-    if(status === "loading"){
-        return <div>loading</div>
-    }
 
-    if(status === "error"){
-        return <div>Error</div>
-    }
+        const handleSelectRequest = (item, index) =>{
+
+            setSelectedRequestLoader(true)
+
+            setTimeout(()=>{
+            setSelectedRequestLoader(false)
+
+
+                setSelectedRequest(item)
+            }, 500)
+            // onClick={()=>SelectSubCategory({item, index})}
+            console.log(item)
+            
+        }
+
 
 
     // useEffect(() => {
@@ -86,259 +107,332 @@ const Offers = () => {
 
                         <div className=" w-full bg-white mt-3 md:mt-0  relative overflow-hidden rounded h-full">
                             <div className='absolute h-full border border-[#E4E7EC] inset-0 z-0 mx-auto w-[0.5px] hidden md:block'></div>
-                            <div className=" grid grid-cols-2 py-6 w-full gap-6 relative">
-
-                                <div className=" flex flex-col px-4 justify-between">
-                                    <div className=" flex flex-col px-4 ">
-                                        <div className="flex items-center py-4 px-4  text-sm w-full border-b bg-gray-100 border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
-                                            <div className="flex items-start gap-3 w-full">
-                                        
-                                                <div  className='w-full'>
-                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                    <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
-
-                                                    <p className="text-xs font-normal">Expires: 20/10/22</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                    <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
-                                                    <p className="text-sm text-[#12B76A]">25% Provided</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-end w-full">
-                                                    <p className="text-sm">Ikeja, Lagos</p>
-                                                </div>
-                                                
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center py-4 px-4 text-sm w-full border-b border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
-                                            <div className="flex items-start gap-3 w-full">
-                                        
-                                                <div  className='w-full'>
-                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                    <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
-
-                                                    <p className="text-xs font-normal">Expires: 20/10/22</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                    <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
-                                                    <p className="text-sm text-[#12B76A]">25% Provided</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-end w-full">
-                                                    <p className="text-sm">Ikeja, Lagos</p>
-                                                </div>
-                                                
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center py-4 px-4 text-sm w-full border-b border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
-                                            <div className="flex items-start gap-3 w-full">
-                                        
-                                                <div  className='w-full'>
-                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                    <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
-
-                                                    <p className="text-xs font-normal">Expires: 20/10/22</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                    <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
-                                                    <p className="text-sm text-[#12B76A]">25% Provided</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-end w-full">
-                                                    <p className="text-sm">Ikeja, Lagos</p>
-                                                </div>
-                                                
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center py-4 px-4 text-sm w-full border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
-                                            <div className="flex items-start gap-3 w-full">
-                                        
-                                                <div  className='w-full'>
-                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                    <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
-
-                                                    <p className="text-xs font-normal">Expires: 20/10/22</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                    <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
-                                                    <p className="text-sm text-[#12B76A]">25% Provided</p>
-                                                </div>
-                                                <div className="flex gap-1 flex-row justify-between items-end w-full">
-                                                    <p className="text-sm">Ikeja, Lagos</p>
-                                                </div>
-                                                
-                                                </div>
-                                                
-                                                
-                                            </div>
-                                        </div>
 
 
-                                    </div>
 
-                                    <div className='py-4 border-t border-gray-300 flex items-center justify-between'>
-                                        <div>
-                                            Showing 1 to 10 of 20 results
-                                        </div>
+                            
 
-                                        <div className='flex items-center justify-between gap-2'>
-                                            <button className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md'>Previous</button>
-                                            <button className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md'>Next</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div className=" grid grid-cols-2 py-6 w-full gap-6 relative">
 
-                                <div className=''>
-                                    <div className='py-2 px-10 sticky top-0'>
-                                            <div className='flex items-center justify-between mb-6'>
-                                                <div>
-                                                    <h2 className='text-3xl mb-2'>120kg of PET Bottles</h2>
+                                    <div className=" flex flex-col px-4 justify-between">
 
-                                                    <p className='font-thin text-[#667085]'>Ikeja, Lagos</p>
-                                                </div>
+                                        {isLoading ? 
 
-                                                <div>
-                                                    <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '5rem'}}>
+                                            <div className='flex items-center justify-center'>
+                                                <LoadingState />
+                                            </div> : 
+                                            <div className=" flex flex-col px-4  ">
+
+
+
+                                                {data && data?.data?.map((request, index)=>(
+                                                    <div className="flex items-center py-4 px-4  text-sm w-full border-b hover:bg-gray-100 border-gray-200  transition duration-200 ease-in-out cursor-pointer" key={index} onClick={()=>handleSelectRequest({request, index})} >
+                                                        <div className="flex items-start gap-3 w-full">
+                                                    
+                                                            <div  className='w-full'>
+                                                            <div className="flex gap-1 items-center flex-row justify-between w-full">
+                                                                <p className="text-lg text-[#5B5B5B] font-semibold">
+                                                                    {/* 120kg of PET Bottles */}
+                                                                    {request.id}
+                                                                    </p>
+
+                                                                <p className="text-xs font-normal">Expires: 20/10/22</p>
+                                                            </div>
+                                                            <div className="flex gap-1 flex-row justify-between items-center w-full">
+                                                                <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
+                                                                <p className="text-sm text-[#12B76A]">25% Provided</p>
+                                                            </div>
+                                                            <div className="flex gap-1 flex-row justify-between items-end w-full">
+                                                                <p className="text-sm">Ikeja, Lagos</p>
+                                                            </div>
+                                                            
+                                                            </div>
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+                                                ))}
+
+
+                                                {/* <div className="flex items-center py-4 px-4  text-sm w-full border-b bg-gray-100 border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
+                                                    <div className="flex items-start gap-3 w-full">
+                                                
+                                                        <div  className='w-full'>
+                                                        <div className="flex gap-1 items-center flex-row justify-between w-full">
+                                                            <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
+
+                                                            <p className="text-xs font-normal">Expires: 20/10/22</p>
+                                                        </div>
+                                                        <div className="flex gap-1 flex-row justify-between items-center w-full">
+                                                            <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
+                                                            <p className="text-sm text-[#12B76A]">25% Provided</p>
+                                                        </div>
+                                                        <div className="flex gap-1 flex-row justify-between items-end w-full">
+                                                            <p className="text-sm">Ikeja, Lagos</p>
+                                                        </div>
                                                         
-                                                        <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25% <br/></span> provided</span> 
+                                                        </div>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
+                                                <div className="flex items-center py-4 px-4 text-sm w-full border-b border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
+                                                    <div className="flex items-start gap-3 w-full">
                                                 
-                                            </div>
-                                        <div>
-                                        {/* flex items-center justify-between w-full */}
-                                            <div className='grid grid-cols-2 gap-4 gap-y-12 py-3'>
-                                                <div className="flex-1">
-                                                    <span className="text-gray-700 font-base mb-3">Category of Scrap</span>
-                                                    <div className="w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
-                                                        Plastics
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div className="flex-1">
-                                                    <span className="text-gray-700 font-base mb-3">Type of Scrap</span>
-                                                    <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
-                                                        Polyethylene Terephthalate (PET)
-                                                    </div>
-                                                    
-                                                </div>
-                                                
-                                                <div className="flex-1">
-                                                    <span className="text-gray-700 font-base mb-3">Date Created</span>
-                                                    <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center gap-3 text-sm">
-                                                        <span className='text-xs'>12:32pm</span> <span>20/10/2022</span>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div className="flex-1">
-                                                    <span className="text-gray-700 font-base mb-3">Expiry Date</span>
-                                                    <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
-                                                    30/10/2022
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div className="flex-1">
-                                                    <span className="text-gray-700 font-base mb-3">Amount Paid</span>
-                                                    <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm justify-between">
-                                                        $7,500
-
-                                                        <span className='text-xs'>1kg = $50</span>
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div className="flex-1">
-                                                    <span className="text-gray-700 font-base mb-3">Days Left</span>
-                                                    <div className="w-full h-12 px-4 py-2 mt-2 text-[#12B76A]   border-0 border-gray-200  rounded-md flex items-center text-sm">
-                                                    10d : 24h : 15m : 32s
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='border-t border-gray-200 pt-6 pb-3 mt-9'>
-                                            <div className='mb-4'>
-                                                <h3 className='text-lg'>Dropoffs</h3>
-                                            </div>
-                                            <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
-                                                <div className="flex items-start gap-4 w-full">
-
-                                                    <div className='h-14 w-14'>
-                                                        <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                    </div>
-                                            
-                                                    <div  className='w-full grow'>
+                                                        <div  className='w-full'>
                                                         <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                            <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                            <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
 
+                                                            <p className="text-xs font-normal">Expires: 20/10/22</p>
                                                         </div>
                                                         <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                            <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
+                                                            <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
+                                                            <p className="text-sm text-[#12B76A]">25% Provided</p>
                                                         </div>
-                                                        <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                            <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                <img src="/images/Icon.png" alt="" />
-                                                            </div>
-                                                            <div className="flex gap-1 flex-col items-start w-full">
-                                                                <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                            </div>
+                                                        <div className="flex gap-1 flex-row justify-between items-end w-full">
+                                                            <p className="text-sm">Ikeja, Lagos</p>
                                                         </div>
-                                                    
+                                                        
+                                                        </div>
+                                                        
+                                                        
                                                     </div>
-                                                    
-                                                    
                                                 </div>
-                                            </div>
-                                            <div className="flex items-center py-3 mb-2 text-sm w-full ">
-                                                <div className="flex items-start gap-4 w-full">
-
-                                                    <div className='h-14 w-14'>
-                                                        <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
-                                                    </div>
-                                            
-                                                    <div  className='w-full grow'>
+                                                <div className="flex items-center py-4 px-4 text-sm w-full border-b border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
+                                                    <div className="flex items-start gap-3 w-full">
+                                                
+                                                        <div  className='w-full'>
                                                         <div className="flex gap-1 items-center flex-row justify-between w-full">
-                                                            <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+                                                            <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
 
+                                                            <p className="text-xs font-normal">Expires: 20/10/22</p>
                                                         </div>
                                                         <div className="flex gap-1 flex-row justify-between items-center w-full">
-                                                            <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
+                                                            <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
+                                                            <p className="text-sm text-[#12B76A]">25% Provided</p>
                                                         </div>
-                                                        <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
-                                                            <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
-                                                                <img src="/images/Icon.png" alt="" />
-                                                            </div>
-                                                            <div className="flex gap-1 flex-col items-start w-full">
-                                                                <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
-                                                                <p className="text-sm  text-[#667085] font-normal">720KB</p>
-                                                            </div>
+                                                        <div className="flex gap-1 flex-row justify-between items-end w-full">
+                                                            <p className="text-sm">Ikeja, Lagos</p>
                                                         </div>
-                                                    
+                                                        
+                                                        </div>
+                                                        
+                                                        
                                                     </div>
-                                                    
-                                                    
                                                 </div>
+                                                <div className="flex items-center py-4 px-4 text-sm w-full border-gray-200 hover:bg-gray-100 transition duration-200 ease-in-out">
+                                                    <div className="flex items-start gap-3 w-full">
+                                                
+                                                        <div  className='w-full'>
+                                                        <div className="flex gap-1 items-center flex-row justify-between w-full">
+                                                            <p className="text-lg text-[#5B5B5B] font-semibold">120kg of PET Bottles</p>
+
+                                                            <p className="text-xs font-normal">Expires: 20/10/22</p>
+                                                        </div>
+                                                        <div className="flex gap-1 flex-row justify-between items-center w-full">
+                                                            <p className="text-sm text-[#5B5B5B] font-normal">$500</p>
+                                                            <p className="text-sm text-[#12B76A]">25% Provided</p>
+                                                        </div>
+                                                        <div className="flex gap-1 flex-row justify-between items-end w-full">
+                                                            <p className="text-sm">Ikeja, Lagos</p>
+                                                        </div>
+                                                        
+                                                        </div>
+                                                        
+                                                        
+                                                    </div>
+                                                </div> */}
+
+
                                             </div>
 
-                                            <div className='mx-auto w-full flex items-center justify-center mt-6'>
-                                                <Link href='/company/offers/1/dropoffs'>
-                                                    <a className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md'>View all Dropoffs</a>
-                                                </Link>
-                                                
+                                        }
+                                        <div className='py-4 border-t border-gray-300 flex items-center justify-between'>
+                                            <div>
+                                                Showing page {page} of {data?.count} results
+                                            </div>
+
+                                            <div className='flex items-center justify-between gap-2'>
+                                                <button className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md hover:bg-gray-100 active:scale-[0.97]' onClick={() => setPage(prevState => Math.max(prevState - 1, 0))} disabled={page === 1}>Previous</button>
+                                                <button className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md hover:bg-gray-100 active:scale-[0.97] ' onClick={() => setPage(prevState => prevState + 1)}>Next</button>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div className=''>
+
+                                        {selectedRequest === "" ? 
+                                        
+                                            <div className='py-2 px-10 sticky top-0'>
+                                                <div className=" w-full bg-white mt-3 md:mt-0  relative overflow-hidden rounded h-full fade-in">
+                                                    <div className='flex items-center justify-center flex-col gap-4'>
+                                                        <img src="/images/file-not-found.svg" />
+                                                        <p>
+                                                            Select an item to view its details.
+                                                        </p>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div> : 
+
+                                        (selectedRequestLoader ? 
+                                            <div className='flex items-center justify-center'>
+                                            <LoadingState />
+                                            </div> :
+                                            
+                                            <div className='py-2 px-10 sticky top-0 fade-in'>
+                                                <div className='flex items-center justify-between mb-6'>
+                                                    <div>
+                                                        <h2 className='text-3xl mb-2'>{selectedRequest?.request?.id}</h2>
+
+                                                        <p className='font-thin text-[#667085]'>Ikeja, Lagos</p>
+                                                    </div>
+
+                                                    <div>
+                                                        <div className="radial-progress text-sm text-center text-[#DD7D37]" style={{'--value':25, '--size': '5rem'}}>
+                                                            
+                                                            <span className='text-[#6D747D]'><span className='font-semibold text-[#3D4044]'>25% <br/></span> provided</span> 
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div>
+                                                {/* flex items-center justify-between w-full */}
+                                                    <div className='grid grid-cols-2 gap-4 gap-y-12 py-3'>
+                                                        <div className="flex-1">
+                                                            <span className="text-gray-700 font-base mb-3">Category of Scrap</span>
+                                                            <div className="w-full h-12 px-4 py-2 mt-2 text-gray-700 bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
+                                                                Plastics
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <span className="text-gray-700 font-base mb-3">Type of Scrap</span>
+                                                            <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
+                                                                Polyethylene Terephthalate (PET)
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        
+                                                        <div className="flex-1">
+                                                            <span className="text-gray-700 font-base mb-3">Date Created</span>
+                                                            <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center gap-3 text-sm">
+                                                                <span className='text-xs'>12:32pm</span> <span>20/10/2022</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <span className="text-gray-700 font-base mb-3">Expiry Date</span>
+                                                            <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm">
+                                                            30/10/2022
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <span className="text-gray-700 font-base mb-3">Amount Paid</span>
+                                                            <div className="w-full h-12 px-4 py-2 mt-2 text-[#6B7280] bg-gray-100  border-0 border-gray-200 focus:border-gray-300 rounded-md focus:outline-none flex items-center text-sm justify-between">
+                                                                $7,500
+
+                                                                <span className='text-xs'>1kg = $50</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <div className="flex-1">
+                                                            <span className="text-gray-700 font-base mb-3">Days Left</span>
+                                                            <div className="w-full h-12 px-4 py-2 mt-2 text-[#12B76A]   border-0 border-gray-200  rounded-md flex items-center text-sm">
+                                                            10d : 24h : 15m : 32s
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className='border-t border-gray-200 pt-6 pb-3 mt-9'>
+                                                    <div className='mb-4'>
+                                                        <h3 className='text-lg'>Dropoffs</h3>
+                                                    </div>
+                                                    <div className="flex items-center py-3 mb-2 text-sm w-full border-b border-gray-200">
+                                                        <div className="flex items-start gap-4 w-full">
+
+                                                            <div className='h-14 w-14'>
+                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
+                                                            </div>
+
+                                                            <div  className='w-full grow'>
+                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
+                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+
+                                                                </div>
+                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
+                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
+                                                                </div>
+                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
+                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
+                                                                        <img src="/images/Icon.png" alt="" />
+                                                                    </div>
+                                                                    <div className="flex gap-1 flex-col items-start w-full">
+                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
+                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                            </div>
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex items-center py-3 mb-2 text-sm w-full ">
+                                                        <div className="flex items-start gap-4 w-full">
+
+                                                            <div className='h-14 w-14'>
+                                                                <img src='/images/Avatar.png' className='w-full object-cover rounded-full  '/>
+                                                            </div>
+
+                                                            <div  className='w-full grow'>
+                                                                <div className="flex gap-1 items-center flex-row justify-between w-full">
+                                                                    <p className="text-lg text-[#5B5B5B] font-semibold">Demi Wikinson <span className='font-thin text-graay-400 text-xs'>2 mins ago</span></p>
+
+                                                                </div>
+                                                                <div className="flex gap-1 flex-row justify-between items-center w-full">
+                                                                    <p className="text-sm  text-[#5B2D0B] font-normal"><span className='font-thin text-[#5B5B5B] text-xs'>Deposited</span> 10kg 0f PET Bottles</p>
+                                                                </div>
+                                                                <div className="flex gap-2 flex-row justify-start items-start w-full mt-2">
+                                                                    <div className='p-2 bg-[#FEF8F3] rounded-full flex items-center justify-center'>
+                                                                        <img src="/images/Icon.png" alt="" />
+                                                                    </div>
+                                                                    <div className="flex gap-1 flex-col items-start w-full">
+                                                                        <p className="text-base  text-[#344054] font-normal"> 10kg 0f PET Bottles</p>
+                                                                        <p className="text-sm  text-[#667085] font-normal">720KB</p>
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                            </div>
+                                                            
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                                    <div className='mx-auto w-full flex items-center justify-center mt-6'>
+                                                        <Link href='/company/offers/1/dropoffs'>
+                                                            <a className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md'>View all Dropoffs</a>
+                                                        </Link>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>)
+                                    }
+                                        
+
+
+
+
+
+                                        
+                                    </div>
+
+
                                 </div>
 
-
-                            </div>
                         </div>
                 </div>
             </div>

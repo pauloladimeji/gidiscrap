@@ -3,6 +3,7 @@ const categoryRoutes = require('./category.routes');
 const collectorRoutes = require('./collector.routes');
 const collectionCenterRoutes = require('./collectioncenter.routes');
 const companyRoutes = require('./company.routes');
+const deliveryRoutes = require('./delivery.routes');
 const requestRoutes = require('./request.routes');
 
 module.exports = (app) => {
@@ -15,4 +16,5 @@ module.exports = (app) => {
   app.use('/api/companies', companyRoutes);
   app.use('/api/requests', requestRoutes);
   app.use('/api/locations', locationRoutes);
+  app.use('/api/deliveries', deliveryRoutes);
 };

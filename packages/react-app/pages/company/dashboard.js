@@ -179,7 +179,7 @@ const Dashboard = () => {
                                 Dashboard 
                             </h1>
                             <div>
-                                <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0' onClick={handleCreateOffer}>Create Offer</button>
+                                <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0 active:scale-[0.97]' onClick={handleCreateOffer}>Create Offer</button>
                             </div>
                         </div>
 
@@ -493,7 +493,7 @@ const Dashboard = () => {
                     </div>
 
                     
-                    <button className=" flex items-center rounded-full border-2 border-gray-700  " onClick={()=>setCreateOffer(false)}>
+                    <button className=" flex items-center rounded-full border-2 border-gray-700 active:scale-[0.97]" onClick={()=>setCreateOffer(false)}>
                            <span className="pointer-events-none flex items-center p-1">
                                <svg className='h-4 w-4 ' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round"></path>
@@ -805,7 +805,7 @@ const Dashboard = () => {
                     </div>
 
                     <div className='flex justify-center items-center mx-auto w-1/2'>
-                        <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0 w-full' type='button' onClick={verifyOffer}>Create Offer</button>
+                        <button className='px-8 py-3 rounded-full shadow-md bg-[#DD7D37] hover:shadow-lg text-white transition duration-150 ease-in-out border-0 w-full active:scale-[0.97] ' type='button' onClick={verifyOffer}>Create Offer</button>
                     </div>
                 </form>
                 </div>

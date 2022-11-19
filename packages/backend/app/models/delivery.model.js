@@ -14,13 +14,14 @@ module.exports = (mongoose) => {
       delivery_proof: {
         // IPFS URL - uploaded file that indicates
         type: mongoose.Schema.Types.Mixed,
-        required: true,
+        // required: true,
       },
       delivery_time: {
         type: Date,
         required: true,
       },
       delivery_status: {
+        type: Boolean
         // i don't know what to do with this...
         // should it be an enum?
       },
