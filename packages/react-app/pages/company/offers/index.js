@@ -253,8 +253,8 @@ const Offers = () => {
                                             </div>
 
                                             <div className='flex items-center justify-between gap-2'>
-                                                <button className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md hover:bg-gray-100 active:scale-[0.97]' onClick={() => setPage(prevState => Math.max(prevState - 1, 0))} disabled={page === 1}>Previous</button>
-                                                <button className='px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md hover:bg-gray-100 active:scale-[0.97] ' onClick={() => setPage(prevState => prevState + 1)}>Next</button>
+                                                <button className={`px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md hover:bg-gray-100 ${page === 1 ? '' : 'active:scale-[0.97]'} offers_paginate-btn`} onClick={() => setPage(prevState => Math.max(prevState - 1, 0))} disabled={page === 1 }>Previous</button>
+                                                <button className={`px-4 py-2 border border-gray-300 bg-white text-gray-600 rounded-md hover:bg-gray-100 ${(data?.count < 11) ? '' : 'active:scale-[0.97]'} offers_paginate-btn `} onClick={() => setPage(prevState => prevState + 1)} disabled={data?.count < 11}>Next</button>
                                             </div>
                                         </div>
                                     </div>

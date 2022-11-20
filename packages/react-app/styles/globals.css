@@ -725,3 +725,11 @@ background-color: #45CD85;
   40% { box-shadow: 0 2.5em 0 0 }
 }
     
+
+
+
+button.offers_paginate-btn:disabled {
+  cursor: not-allowed;
+  
+
+}
